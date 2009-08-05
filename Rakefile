@@ -21,7 +21,7 @@ task :gemspec do
     s.homepage = 'http://sutto.net/'
     s.authors  = ["Darcy Laycock"]
     s.version  = "0.0.1"
-    s.summary  = "Reversible Data provides migration-like functionality for tests etc."
+    s.summary  = "Reversible Data provides migration-like functionality for tests etc - All with temporary models."
     s.files    = FileList["{lib,test}/**/*"].to_a
     s.platform = Gem::Platform::RUBY
   end

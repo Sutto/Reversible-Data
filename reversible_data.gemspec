@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://sutto.net/}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Reversible Data provides migration-like functionality for tests etc.}
+  s.summary = %q{Reversible Data provides migration-like functionality for tests etc - All with temporary models.}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
