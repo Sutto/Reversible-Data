@@ -17,12 +17,35 @@ module ReversibleData
     Table.known_models[name]
   end
   
+  def self.remove(name)
+    table = self[name]
+    table.down!
+    table.destroy
+  end
+  
+  def self.remove_all
+    Table.known_models.each_value do |t|
+      t.down!
+      t.destroy
+    end
+  end
+  
   def self.manager_for(*tables)
     TableManager.new(*tables)
   end
   
   def self.in_memory!
-    ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :dbfile => ":memory:")
+    if connected?
+      ActiveRecord::Base.connection.disconnect!
+      ActiveRecord::Base.remove_connection
+    end
+    ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+  end
+  
+  def self.connected?
+    ActiveRecord::Base.connection.active?
+  rescue ActiveRecord::ConnectionNotEstablished
+    false
   end
   
 end
