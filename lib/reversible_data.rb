@@ -13,6 +13,10 @@ module ReversibleData
     Table.new(name, model_name, opts, &blk)
   end
   
+  def self.[](name)
+    Table.known_models[name]
+  end
+  
   def self.manager_for(*tables)
     TableManager.new(*tables)
   end
