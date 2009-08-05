@@ -9,8 +9,8 @@ module ReversibleData
   autoload :TableManager,  'reversible_data/table_manager'
   autoload :ShouldaMacros, 'reversible_data/shoulda_macros'
   
-  def self.add(name, model_name = nil, &blk)
-    Table.new(name, model_name, &blk)
+  def self.add(name, model_name = nil, opts = {}, &blk)
+    Table.new(name, model_name, opts, &blk)
   end
   
   def self.manager_for(*tables)
