@@ -24,7 +24,7 @@ module ReversibleData
       return if @options[:skip_table]
       drop_table if autodrop
       return if connection.table_exists?(@table_name)
-      connection.create_table(table_name, &blk)
+      connection.create_table(table_name, &@migrator)
     end
     
     def remove_model
