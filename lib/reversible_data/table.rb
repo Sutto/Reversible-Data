@@ -6,7 +6,7 @@ module ReversibleData
     
     attr_accessor :table_name, :model_name, :options
     
-    def initialize(table_name, model_name = nil, otps = {}, &blk)
+    def initialize(table_name, model_name = nil, opts = {}, &blk)
       @table_name       = table_name.to_s.tableize.to_sym
       @model_name       = (model_name || @table_name).to_s.classify
       @migrator         = blk
