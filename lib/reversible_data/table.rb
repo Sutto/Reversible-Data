@@ -18,7 +18,7 @@ module ReversibleData
     end
     
     def drop_table
-      return if @options[:skip_model]
+      return if @options[:skip_table]
       connection.drop_table(@table_name) if connection.table_exists?(@table_name)
     end
     
