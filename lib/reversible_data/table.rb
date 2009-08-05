@@ -6,12 +6,13 @@ module ReversibleData
     
     attr_accessor :table_name, :model_name, :options
     
-    def initialize(table_name, model_name = nil, opts = {}, &blk)
+    def initialize(table_name, opts = {}, &blk)
       @table_name       = table_name.to_s.tableize.to_sym
-      @model_name       = (model_name || @table_name).to_s.classify
+      @model_name       = (opts[:class_name] || @table_name).to_s.classify
       @migrator         = blk
       @model_definition = nil
-      @options          = opts
+      default_options   = {:skip_model => Object.const_defined?(@model_name), :skip_table => connection.table_exists?(@table_name)}
+      @options          = opts.reverse_merge(default_options)
       @blueprint        = nil
       self.known_models[table_name.to_sym] = self
     end

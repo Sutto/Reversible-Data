@@ -31,10 +31,10 @@ a connection. For most plugins, the example should fill most uses.
     # You can then use table.create_table, table.drop_table,
     # table.create_model, table.remove_model.
     
-Using ReversibleData.add, you can specify a second argument as a string
-which will define the model / constant name. e.g:
+
+sing ReversibleData.add, you can specify a class\_name option
       
-    ReversibleData.add(:awesome_sauce, "Ninja")
+    ReversibleData.add(:awesome_sauce, :class_name => "Ninja")
     
 If nil, it will use the rails default method of generating a model name.
 
