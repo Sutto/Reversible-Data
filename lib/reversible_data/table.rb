@@ -12,6 +12,7 @@ module ReversibleData
       @migrator         = blk
       @model_definition = nil
       @options          = opts
+      @blueprint        = nil
       self.known_models[table_name.to_sym] = self
     end
     
@@ -40,11 +41,16 @@ module ReversibleData
       return if Object.const_defined?(@model_name)
       @model = Class.new(ActiveRecord::Base)
       @model.class_eval(&@model_definition) unless @model_definition.nil?
+      @model.blueprint(&@blueprint) unless @blueprint.nil?
       Object.const_set(@model_name, @model)
     end
     
     def define_model(&blk)
       @model_definition = blk unless blk.nil?
+    end
+    
+    def blueprint(&blk)
+      @blueprint = blk unless blk.nil?
     end
     
     def clear_model_definition!
