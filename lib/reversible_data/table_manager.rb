@@ -1,19 +1,23 @@
 module ReversibleData
   class TableManager
     
-    def initialize(*names)
-      @names = names.map { |n| n.to_sym }
+    attr_reader :managed_tables
+    
+    def initialize(*managed_tables)
+      @managed_tables = managed_tables.map { |n| n.to_sym }.freeze
     end
     
     def up!
-      @names.each do |name|
-        table.up! unless (table = table_for(name)).nil?
+      @managed_tables.each do |name|
+        table = table_for(name)
+        table.up! unless table.nil?
       end
     end
     
     def down!
-      @names.each do |name|
-        table.down! unless (table = table_for(name)).nil?
+      @managed_tables.each do |name|
+        table = table_for(name)
+        table.down! unless table.nil?
       end
     end
     
