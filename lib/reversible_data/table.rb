@@ -62,7 +62,7 @@ module ReversibleData
       return if Object.const_defined?(@model_name)
       @model = Class.new(ActiveRecord::Base)
       @model.class_eval(&@model_definition) unless @model_definition.nil?
-      @model.blueprint(&@blueprint) unless @blueprint.nil?
+      @model.blueprint(&@blueprint) unless @blueprint.nil? || !@model.respond_to?(:blueprint)
       Object.const_set(@model_name, @model)
     end
     

@@ -76,9 +76,25 @@ class TableTest < Test::Unit::TestCase
       assert !defined?(::User)
     end
     
-    should 'let you call up! to create the table and the model'
+    should 'let you call up! to create the table and the model' do
+      assert !defined?(::User)
+      assert !ActiveRecord::Base.connection.table_exists?(:users)
+      table = ReversibleData::Table.new(:user) { |t| t.string :name }
+      table.up!
+      assert defined?(::User)
+      assert ActiveRecord::Base.connection.table_exists?(:users)
+      assert User < ActiveRecord::Base
+    end
     
-    should 'let you call down! to clean up'
+    should 'let you call down! to clean up' do
+      table = ReversibleData::Table.new(:user) { |t| t.string :name }
+      table.up!
+      assert ActiveRecord::Base.connection.table_exists?(:users)
+      assert User < ActiveRecord::Base
+      table.down!
+      assert !ActiveRecord::Base.connection.table_exists?(:users)
+      assert !defined?(::User)
+    end
   
     should 'default to skipping model if the constant exists' do
       ::Awesome = true
@@ -107,7 +123,18 @@ class TableTest < Test::Unit::TestCase
       table.remove_model
     end
   
-    should 'let you specify a blueprint for machinist'
+    should 'let not call the blueprint if none is specified' do
+      table = ReversibleData::Table.new(:user) { |t| t.string :name }
+      table.up!
+      assert !User.blueprint_called
+    end
+    
+    should 'call the blueprint if present' do
+      table = ReversibleData::Table.new(:user) { |t| t.string :name }
+      table.blueprint {}
+      table.up!
+      assert User.blueprint_called
+    end
   
   end
 end
