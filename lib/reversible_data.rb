@@ -8,6 +8,7 @@ module ReversibleData
   autoload :Table,         'reversible_data/table'
   autoload :TableManager,  'reversible_data/table_manager'
   autoload :ShouldaMacros, 'reversible_data/shoulda_macros'
+  autoload :RSpec2Macros,  'reversible_data/rspec2_macros'
   
   def self.add(name, opts = {}, &blk)
     Table.new(name, opts, &blk)
